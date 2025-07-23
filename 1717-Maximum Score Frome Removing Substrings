@@ -1,0 +1,35 @@
+class Solution {
+  
+private int calculatePoints(String s, char first, char second, int high, int low) {
+    int totalPoints = 0;
+    StringBuilder stack1 = new StringBuilder();
+    for (char ch : s.toCharArray()) {
+        if (stack1.length() > 0 && stack1.charAt(stack1.length() - 1) == first && ch == second) {
+            stack1.deleteCharAt(stack1.length() - 1);
+            totalPoints += high;
+        } else {
+            stack1.append(ch);
+        }
+    }
+    StringBuilder stack2 = new StringBuilder();
+    for (int i = 0; i < stack1.length(); i++) {
+        char ch = stack1.charAt(i);
+        if (stack2.length() > 0 && stack2.charAt(stack2.length() - 1) == second && ch == first) {
+            stack2.deleteCharAt(stack2.length() - 1);
+            totalPoints += low;
+        } else {
+            stack2.append(ch);
+        }
+    }
+
+    return totalPoints;
+}
+
+    public int maximumGain(String s, int x, int y) {
+        if (x > y) {
+        return calculatePoints(s, 'a', 'b', x, y);
+    } else {
+        return calculatePoints(s, 'b', 'a', y, x);
+    }
+    }
+}
